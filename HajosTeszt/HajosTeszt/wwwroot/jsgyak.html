@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        #pascal{
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .sor{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        .elem{
+            height: 30px;
+            width: 30px;
+            text-align: center;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="pascal">.</div>
+
+    <script>
+        console.log("betöltődött")
+
+        var faktoriálisR = (n) => {
+            if (n === 0 || n === 1) {
+                return 1;
+            }
+            else {
+                return n * faktoriálisR(n - 1)
+            }
+        }
+
+        let ide = document.getElementById("pascal")
+
+
+        for (var s = 0; s < 10; s++) {
+            let sor = document.createElement("div")
+            sor.classList.add("sor")
+            ide.appendChild(sor)
+
+
+            for (var o = 0; o <= s; o++) {
+                let újSzám = document.createElement("div");
+                újSzám.classList.add("elem")
+                újSzám.innerText = faktoriálisR(s) / (faktoriálisR(o) * (faktoriálisR(s - o)))
+                újSzám.style.color = `rgb(${255 / 10 * s},0,${255 / 10 * o})`
+                sor.appendChild(újSzám)
+
+            }
+        }
+    </script>
+</body>
+</html>
