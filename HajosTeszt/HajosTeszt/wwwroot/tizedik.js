@@ -5,13 +5,36 @@
 
 var sorszam = 0;
 var kérdések;
+var hotList = [];           //Az éppen gyakoroltatott kérdések listája 
+var questionsInHotList = 3; //Ez majd 7 lesz, teszteléshez jobb a 3. 
+var displayedQuestion;      //A hotList-ből éppen ez a kérdés van kint
+var numberOfQuestions;      //Kérdések száma a teljes adatbázisban
+var nextQuestion = 1;       //A következő kérdés száma a teljes listában
 
 
-function letöltés() {
-    fetch('/questions.json')
-        .then(response => response.json())
-        .then(data => letöltésBefejeződött(data)
-        );
+function letöltés(questionNumber, destination) {
+    fetch(`/questions/${questionNumber}`)
+        .then(
+            result => {
+                if (!result.ok) {
+                    console.error(`Hibás letöltés: ${response.status}`)
+                }
+                else {
+                    return result.json()
+                }
+            }
+        )
+        .then(
+            q => {
+                hotList[destination].question = q;
+                hotList[destination].goodAnswers = 0;
+                console.log(`A ${questionNumber}. kérdés letöltve a hot list ${destination}. helyére`)
+                if (displayedQuestion == undefined && destination == 0) { //!!!!!!!!!!!!!
+                    displayedQuestion = 0;
+                    kérdésMegjelenítés();
+                }
+            }
+        )
     válasz1.style.backgroundColor = "steelblue";
     válasz2.style.backgroundColor = "steelblue";
     válasz3.style.backgroundColor = "steelblue";
@@ -39,8 +62,9 @@ fetch('/questions/1')
     .then(data => kérdésMegjelenítés(data)
 );
 
-function kérdésMegjelenítés(kérdés) {
+function kérdésMegjelenítés() {
 
+    
     let kérdés_szöveg = document.getElementById("kérdés_szöveg");
     let elem = document.createElement("div");
     kérdés_szöveg.innerHTML = kérdések[sorszam].questionText
@@ -56,6 +80,7 @@ function kérdésMegjelenítés(kérdés) {
     válasz2.innerText = kérdések[sorszam].answer2;
     válasz3.innerText = kérdések[sorszam].answer3;
 
+    let kérdés = hotList[displayedQuestion].question;
     console.log(kérdés);
     document.getElementById("kérdés_szöveg").innerText = kérdés.questionText
     document.getElementById("válasz1").innerText = kérdés.answer1
@@ -148,5 +173,21 @@ function válaszfeldolgozás(válasz) {
     }
     else {
         return válasz.json()
+    }
+}
+
+function init() {
+    for (var i = 0; i < questionsInHotList; i++) {
+        let q = {
+            question: {},
+            goodAnswers: 0
+        }
+        hotList[i] = q;
+    }
+
+    //Első kérdések letöltése
+    for (var i = 0; i < questionsInHotList; i++) {
+        kérdésBetöltés(nextQuestion, i);
+        nextQuestion++;
     }
 }
