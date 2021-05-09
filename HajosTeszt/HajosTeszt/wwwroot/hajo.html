@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <script src="hetedik.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
     <link href="hajo.css" rel="stylesheet" />
+    <script src="tizedik.js"></script>
 
 </head>
 <body>
@@ -15,17 +16,17 @@
 
         <div id="középső">
             <div id="válaszok">
-                <div id="válasz1" class="valasz kattintható" onclick="ellenorzes()">Válasz 1</div>
-                <div id="válasz2" class="valasz kattintható" onclick="ellenorzes()">Válasz 2</div>
-                <div id="válasz3" class="valasz kattintható" onclick="ellenorzes()">Válasz 3</div>
+                <div id="válasz1" onclick="választás(1)" class="kerdes kattintható">Válasz 1</div>
+                <div id="válasz2" onclick="választás(2)" class="kerdes kattintható">Válasz 2</div>
+                <div id="válasz3" onclick="választás(3)" class="kerdes kattintható">Válasz 3</div>
             </div>
-            <div>
-                <img id="kép">
+            <div id="kép_keret">
+                <img id="kép" src="" />
             </div>
         </div>
         <div id="vezérlő">
-            <div onclick="vissza()" class="gomb kattintható">Vissza</div>
-            <div onclick="elore()" class="gomb kattintható">Előre</div>
+            <div id="vissza_gomb" class="gomb kattintható">Vissza</div>
+            <div id="előre_gomb" class="gomb kattintható">Előre</div>
         </div>
     </div>
 </body>
